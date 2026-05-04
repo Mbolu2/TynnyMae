@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tynny-Mae HomeSupply | Household Provisioning, Reimagined</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root {
+  --gold:        #C9A84C;
+  --gold-light:  #E2C97E;
+  --gold-pale:   #F5EDD4;
+  --gold-dim:    #8A6E2F;
+  --black:       #0A0A0A;
+  --black-soft:  #111111;
+  --black-mid:   #1A1A1A;
+  --white:       #FAFAF7;
+  --white-dim:   rgba(250,250,247,0.7);
+  --white-faint: rgba(250,250,247,0.12);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Montserrat', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 300;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 4rem;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+  transition: background 0.4s;
+}
+nav.scrolled {
+  background: rgba(10,10,10,0.97);
+  border-bottom: 1px solid rgba(201,168,76,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.9rem; }
+.nav-emblem { width: 36px; height: 36px; }
+.nav-wordmark {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 500;
+  letter-spacing: 0.18em; color: var(--gold); line-height: 1;
+}
+.nav-wordmark span {
+  display: block; font-size: 0.55rem; letter-spacing: 0.35em;
+  font-weight: 300; color: var(--gold-light); margin-top: 2px;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--white-dim); transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  border: 1px solid var(--gold); color: var(--gold);
+  padding: 0.6rem 1.5rem; transition: all 0.3s; cursor: pointer;
+}
+.nav-cta:hover { background: var(--gold); color: var(--black); }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center; padding: 0 4rem;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-bg-text {
+  position: absolute; right: -2rem; top: 50%; transform: translateY(-50%);
+  font-family: var(--serif); font-size: 22vw; font-weight: 300;
+  color: rgba(201,168,76,0.04); line-height: 1; pointer-events: none;
+  user-select: none; letter-spacing: -0.02em;
+}
+.hero-content { position: relative; z-index: 2; padding-top: 5rem; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 2rem;
+}
+.hero-tag::before { content: ''; display: block; width: 2.5rem; height: 1px; background: var(--gold); }
+.hero-headline {
+  font-family: var(--serif); font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 300; line-height: 1.05; margin-bottom: 2rem; color: var(--white);
+}
+.hero-headline em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 0.78rem; line-height: 2; color: var(--white-dim);
+  max-width: 420px; margin-bottom: 3rem; letter-spacing: 0.04em;
+}
+.hero-actions { display: flex; align-items: center; gap: 2rem; }
+.btn-primary {
+  background: var(--gold); color: var(--black);
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1rem 2.5rem; font-weight: 600; cursor: pointer;
+  transition: all 0.3s; border: none; font-family: var(--sans); display: inline-block;
+}
+.btn-primary:hover { background: var(--gold-light); }
+.btn-ghost {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--white-dim); border-bottom: 1px solid rgba(250,250,247,0.3);
+  padding-bottom: 2px; transition: all 0.3s; cursor: pointer;
+}
+.btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+.hero-visual {
+  position: relative; z-index: 2;
+  display: flex; justify-content: center; align-items: center; padding-top: 5rem;
+}
+.hero-circle-frame {
+  width: min(420px, 90%); aspect-ratio: 1;
+  border: 1px solid rgba(201,168,76,0.25); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.hero-circle-frame::before {
+  content: ''; position: absolute; inset: 16px;
+  border: 1px solid rgba(201,168,76,0.12); border-radius: 50%;
+}
+.hero-logo-large { width: 55%; opacity: 0.92; }
+.hero-orbits {
+  position: absolute; inset: -40px;
+  border: 1px dashed rgba(201,168,76,0.1); border-radius: 50%;
+  animation: spin 40s linear infinite;
+}
+.orbit-dot {
+  position: absolute; width: 6px; height: 6px;
+  background: var(--gold); border-radius: 50%;
+  top: 0; left: 50%; transform: translateX(-50%) translateY(-50%);
+  box-shadow: 0 0 8px var(--gold);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(201,168,76,0.5);
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ══════════════════════════════════════════
+   STATS BAND
+══════════════════════════════════════════ */
+.stats-band {
+  background: var(--black-mid);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.stat-item {
+  padding: 2.5rem 2rem; text-align: center;
+  border-right: 1px solid rgba(201,168,76,0.12);
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
+  color: var(--gold); line-height: 1; margin-bottom: 0.5rem;
+}
+.stat-label {
+  font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--white-dim);
+}
+
+/* ══════════════════════════════════════════
+   SHARED SECTION STYLES
+══════════════════════════════════════════ */
+section { padding: 8rem 4rem; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+}
+.section-tag::before { content: ''; width: 2rem; height: 1px; background: var(--gold); display: block; }
+.section-title { font-family: var(--serif); font-weight: 300; line-height: 1.1; color: var(--white); }
+.gold { color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   WHAT WE OFFER
+══════════════════════════════════════════ */
+.offer { background: var(--black-soft); }
+.offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.offer-text .section-title { font-size: clamp(2.2rem, 3.5vw, 3.8rem); margin-bottom: 1.5rem; }
+.offer-body { font-size: 0.8rem; line-height: 2.1; color: var(--white-dim); margin-bottom: 2.5rem; max-width: 460px; }
+.offer-pillars { display: flex; flex-direction: column; gap: 1.2rem; }
+.pillar {
+  display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.5rem;
+  border: 1px solid rgba(201,168,76,0.12); background: rgba(201,168,76,0.03);
+  transition: border-color 0.3s, background 0.3s; cursor: default;
+}
+.pillar:hover { border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.07); }
+.pillar-icon {
+  width: 38px; height: 38px; flex-shrink: 0;
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center;
+}
+.pillar-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+.pillar-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--gold-light); margin-bottom: 0.25rem; }
+.pillar-desc { font-size: 0.7rem; line-height: 1.8; color: var(--white-dim); }
+
+/* ══════════════════════════════════════════
+   IN-APP VIDEO SECTION
+══════════════════════════════════════════ */
+.video-section {
+  background: var(--black);
+  padding: 8rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.video-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.video-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: center;
+}
+.video-text { position: relative; z-index: 2; }
+.video-text .section-title { font-size: clamp(2rem, 3.2vw, 3.4rem); margin-bottom: 1.2rem; }
+.video-text p { font-size: 0.78rem; line-height: 2; color: var(--white-dim); margin-bottom: 2rem; }
+.video-meta {
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.video-meta-item {
+  display: flex; align-items: center; gap: 0.8rem;
+  font-size: 0.65rem; letter-spacing: 0.08em; color: var(--white-dim);
+}
+.video-meta-item::before {
+  content: ''; display: block; width: 4px; height: 4px;
+  background: var(--gold); border-radius: 50%; flex-shrink: 0;
+}
+.video-frame-wrap {
+  position: relative; z-index: 2;
+}
+.video-frame-border {
+  position: relative;
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 6px;
+  background: var(--black-mid);
+}
+.video-frame-border::before {
+  content: '';
+  position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px;
+  border: 1px solid rgba(201,168,76,0.1);
+  pointer-events: none;
+}
+.video-corner {
+  position: absolute; width: 20px; height: 20px;
+  border-color: var(--gold); border-style: solid; z-index: 3;
+}
+.video-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.video-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.video-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.video-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0; overflow: hidden;
+  background: #000;
+}
+.video-embed iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.video-label {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-top: 1rem;
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+}
+.video-label::before {
+  content: '▶'; font-size: 0.5rem;
+}
+
+/* ══════════════════════════════════════════
+   PLANS
+══════════════════════════════════════════ */
+.plans { background: var(--black-soft); }
+.plans-header { text-align: center; margin-bottom: 4rem; }
+.plans-header .section-title { font-size: clamp(2.2rem, 3.5vw, 3.5rem); margin-bottom: 1rem; }
+.plans-header p { font-size: 0.78rem; color: var(--white-dim); letter-spacing: 0.04em; }
+.plans-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.plan-card {
+  border: 1px solid rgba(201,168,76,0.18); padding: 2.5rem 2rem;
+  position: relative; transition: all 0.4s; cursor: pointer; background: var(--black-mid);
+}
+.plan-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.plan-card.featured {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, rgba(201,168,76,0.08) 0%, var(--black-mid) 60%);
+}
+.plan-featured-badge {
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--black);
+  font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.3rem 1.2rem; font-weight: 600; white-space: nowrap;
+}
+.plan-name { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--gold-light); margin-bottom: 0.4rem; }
+.plan-cycle { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white-dim); margin-bottom: 2rem; }
+.plan-price { display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 2rem; }
+.plan-currency { font-size: 1rem; color: var(--gold); font-family: var(--serif); }
+.plan-amount { font-family: var(--serif); font-size: 3rem; font-weight: 300; color: var(--white); line-height: 1; }
+.plan-per { font-size: 0.65rem; color: var(--white-dim); align-self: flex-end; padding-bottom: 0.3rem; }
+.plan-divider { height: 1px; background: rgba(201,168,76,0.15); margin-bottom: 1.5rem; }
+.plan-items { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+.plan-item { display: flex; align-items: center; gap: 0.7rem; font-size: 0.72rem; color: var(--white-dim); letter-spacing: 0.02em; }
+.plan-check {
+  width: 14px; height: 14px; flex-shrink: 0;
+  border: 1px solid rgba(201,168,76,0.4);
+  display: flex; align-items: center; justify-content: center;
+}
+.plan-check::after { content: '✓'; font-size: 9px; color: var(--gold); }
+.plan-btn {
+  width: 100%; padding: 0.85rem;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  border: 1px solid rgba(201,168,76,0.4); background: transparent;
+  color: var(--gold); cursor: pointer; transition: all 0.3s;
+  font-family: var(--sans); font-weight: 500;
+}
+.plan-btn:hover,
+.plan-card.featured .plan-btn { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   HOW IT WORKS
+══════════════════════════════════════════ */
+.how { background: var(--black); }
+.how-inner { max-width: 900px; margin: 0 auto; }
+.how-header { text-align: center; margin-bottom: 5rem; }
+.how-header .section-title { font-size: clamp(2rem, 3vw, 3.2rem); }
+.how-steps { display: flex; flex-direction: column; }
+.how-step {
+  display: grid; grid-template-columns: 80px 1fr; gap: 2rem; padding: 2.5rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+.how-step:first-child { border-top: 1px solid rgba(201,168,76,0.1); }
+.step-number-wrap { display: flex; flex-direction: column; align-items: center; }
+.step-number { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; color: rgba(201,168,76,0.2); line-height: 1; }
+.step-line { flex: 1; width: 1px; background: rgba(201,168,76,0.15); margin-top: 0.5rem; }
+.step-content { padding: 0.5rem 0; }
+.step-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--gold-light); margin-bottom: 0.6rem; }
+.step-desc { font-size: 0.75rem; line-height: 2; color: var(--white-dim); }
+
+/* ══════════════════════════════════════════
+   VENDOR CTA
+══════════════════════════════════════════ */
+.vendor-cta {
+  background: var(--black-mid);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 6rem 4rem;
+}
+.vendor-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+}
+.vendor-text .section-title { font-size: clamp(2rem, 3.2vw, 3.2rem); margin-bottom: 1rem; }
+.vendor-text p { font-size: 0.8rem; line-height: 2; color: var(--white-dim); max-width: 560px; }
+.vendor-actions { display: flex; flex-direction: column; gap: 1rem; align-items: flex-end; }
+.vendor-benefits { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+.vendor-benefit { display: flex; align-items: center; gap: 0.6rem; font-size: 0.65rem; color: var(--white-dim); }
+.vendor-benefit::before { content: '—'; color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════ */
+.testimonials { background: var(--black-soft); padding: 7rem 4rem; }
+.testimonials-header { text-align: center; margin-bottom: 4rem; }
+.testimonials-header .section-title { font-size: clamp(2rem, 3vw, 3rem); }
+.testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+.testimonial-card {
+  border: 1px solid rgba(201,168,76,0.15); padding: 2.2rem;
+  background: var(--black-mid); position: relative; transition: border-color 0.3s;
+}
+.testimonial-card:hover { border-color: rgba(201,168,76,0.35); }
+.testimonial-quote { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; color: rgba(201,168,76,0.2); line-height: 0.8; margin-bottom: 1rem; }
+.testimonial-text { font-family: var(--serif); font-size: 1.05rem; font-style: italic; line-height: 1.7; color: var(--white); margin-bottom: 1.5rem; font-weight: 300; }
+.testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+.author-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 1rem; color: var(--gold);
+  background: rgba(201,168,76,0.06); flex-shrink: 0;
+}
+.author-name { font-size: 0.72rem; font-weight: 500; color: var(--gold-light); letter-spacing: 0.06em; }
+.author-location { font-size: 0.62rem; color: var(--white-dim); letter-spacing: 0.04em; margin-top: 2px; }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: var(--black-mid);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding: 4rem 4rem 2rem;
+}
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand .nav-wordmark { font-size: 1.3rem; margin-bottom: 1rem; display: block; }
+.footer-brand p { font-size: 0.72rem; line-height: 2; color: var(--white-dim); max-width: 280px; }
+.footer-col-title { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; display: block; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { font-size: 0.72rem; color: var(--white-dim); transition: color 0.3s; }
+.footer-links a:hover { color: var(--gold); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+.footer-copy { font-size: 0.62rem; color: rgba(250,250,247,0.3); letter-spacing: 0.06em; }
+.footer-legal { display: flex; gap: 1.5rem; }
+.footer-legal a { font-size: 0.62rem; color: rgba(250,250,247,0.3); transition: color 0.3s; }
+.footer-legal a:hover { color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   SURVEY MODAL
+══════════════════════════════════════════ */
+.survey-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  padding: 1.5rem;
+}
+.survey-modal.active { opacity: 1; visibility: visible; }
+
+.survey-box {
+  width: min(100%, 540px);
+  background: var(--black-mid);
+  border: 1px solid rgba(201,168,76,0.25);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,168,76,0.3) transparent;
+}
+.survey-box::-webkit-scrollbar { width: 4px; }
+.survey-box::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); }
+
+/* Gold corner accents */
+.survey-box::before,
+.survey-box::after {
+  content: ''; position: absolute; width: 24px; height: 24px;
+  border-color: var(--gold); border-style: solid; pointer-events: none; z-index: 1;
+}
+.survey-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.survey-box::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+/* Inner corners (pseudo via JS-free approach) */
+.survey-box-inner {
+  position: relative; padding: 2.8rem;
+}
+.survey-box-inner::before,
+.survey-box-inner::after {
+  content: ''; position: absolute; width: 24px; height: 24px;
+  border-color: rgba(201,168,76,0.35); border-style: solid;
+}
+.survey-box-inner::before { top: 0; right: 0; border-width: 2px 2px 0 0; }
+.survey-box-inner::after  { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+
+.survey-close {
+  position: absolute; top: 1.2rem; right: 1.4rem;
+  color: rgba(201,168,76,0.6); cursor: pointer; font-size: 1.1rem;
+  transition: color 0.2s; background: none; border: none; line-height: 1;
+  font-family: var(--sans);
+}
+.survey-close:hover { color: var(--gold); }
+
+.survey-eyebrow {
+  font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.survey-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--gold); display: block; }
+
+.survey-title {
+  font-family: var(--serif); font-size: 2.2rem; font-weight: 300;
+  color: var(--white); margin-bottom: 0.5rem; line-height: 1.1;
+}
+.survey-title em { font-style: italic; color: var(--gold); }
+
+.survey-sub {
+  font-size: 0.72rem; line-height: 1.9; color: var(--white-dim); margin-bottom: 2.2rem;
+}
+
+.survey-divider { height: 1px; background: rgba(201,168,76,0.15); margin-bottom: 2rem; }
+
+.survey-form { display: flex; flex-direction: column; gap: 1rem; }
+
+/* Two-col row */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.field-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.field-label {
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(201,168,76,0.7);
+}
+.survey-form input,
+.survey-form select,
+.survey-form textarea {
+  width: 100%;
+  background: rgba(250,250,247,0.03);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 0.85rem 1rem;
+  color: var(--white);
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 300;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.survey-form select { cursor: pointer; }
+.survey-form select option { background: var(--black-mid); color: var(--white); }
+.survey-form textarea { resize: vertical; min-height: 80px; }
+.survey-form input::placeholder,
+.survey-form textarea::placeholder { color: rgba(250,250,247,0.25); }
+.survey-form input:focus,
+.survey-form select:focus,
+.survey-form textarea:focus {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.04);
+}
+
+.survey-submit {
+  margin-top: 0.5rem;
+  background: var(--gold); color: var(--black);
+  border: none; padding: 1rem 2rem;
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  cursor: pointer; font-weight: 600; font-family: var(--sans);
+  transition: background 0.3s; width: 100%;
+}
+.survey-submit:hover { background: var(--gold-light); }
+
+.survey-note {
+  font-size: 0.6rem; color: rgba(250,250,247,0.3);
+  text-align: center; margin-top: 0.8rem; line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .video-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .video-text { text-align: center; }
+  .video-meta { align-items: center; }
+}
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 2rem; }
+  .nav-links { display: none; }
+  section { padding: 5rem 2rem; }
+  .video-section { padding: 5rem 2rem; }
+  .hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; min-height: auto; gap: 3rem; }
+  .hero-visual { display: none; }
+  .stats-band { grid-template-columns: repeat(2, 1fr); }
+  .offer-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .plans-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .testimonial-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .vendor-inner { grid-template-columns: 1fr; }
+  .vendor-actions { align-items: flex-start; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .survey-box-inner { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     SURVEY MODAL
+══════════════════════════════════════ -->
+<div class="survey-modal" id="surveyModal" role="dialog" aria-modal="true" aria-label="Household Survey">
+  <div class="survey-box">
+    <div class="survey-box-inner">
+      <button class="survey-close" id="closeSurvey" aria-label="Close">✕</button>
+
+      <div class="survey-eyebrow">Get Started</div>
+      <h2 class="survey-title">Your <em>household,</em><br>provisioned.</h2>
+      <p class="survey-sub">
+        Tell us about your home and we'll tailor your first HomeSupply cycle before it begins.
+      </p>
+      <div class="survey-divider"></div>
+
+      <form
+        class="survey-form"
+        action="https://formsubmit.co/YOUR_EMAIL@gmail.com"
+        method="POST"
+      >
+        <!-- Redirect back to page after submit -->
+        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you">
+        <input type="hidden" name="_subject" value="New HomeSupply Subscriber">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label" for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="Full Name" placeholder="e.g. Adaeze Obi" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="whatsapp">WhatsApp Number</label>
+            <input type="tel" id="whatsapp" name="WhatsApp Number" placeholder="e.g. 08012345678" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label" for="householdSize">Household Size</label>
+            <select id="householdSize" name="Household Size" required>
+              <option value="" disabled selected>Select size</option>
+              <option>1 – 2 People</option>
+              <option>3 – 5 People</option>
+              <option>6+ People</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="preferredPlan">Preferred Plan</label>
+            <select id="preferredPlan" name="Preferred Plan" required>
+              <option value="" disabled selected>Select plan</option>
+              <option>Basic — ₦35,000/mo</option>
+              <option>Family — ₦65,000/mo</option>
+              <option>Plus — ₦110,000/mo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label" for="deliveryArea">Delivery Area</label>
+            <input type="text" id="deliveryArea" name="Delivery Area" placeholder="e.g. Lekki Phase 1">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="frequency">Delivery Frequency</label>
+            <select id="frequency" name="Delivery Frequency">
+              <option>Monthly</option>
+              <option>Bi-Weekly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="preferences">Dietary Preferences & Special Requests</label>
+          <textarea
+            id="preferences"
+            name="Preferences"
+            placeholder="Any dietary restrictions, preferred brands, items you always need…"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="survey-submit">Submit &amp; Begin My Subscription</button>
+        <p class="survey-note">
+          No payment taken here. Our team will confirm your plan and send your payment link within 24 hours.
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <svg class="nav-emblem" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="36" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M32 28 C28 32 26 38 30 44 C33 49 38 50 38 50" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <path d="M32 28 C36 24 42 25 44 28 C46 32 44 36 40 37 C36 38 32 36 32 32 Z" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
+      <path d="M38 35 L36 42 C35 46 36 50 40 52 C44 50 45 46 44 42 L42 35" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <ellipse cx="40" cy="52" rx="4" ry="5.5" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
+    </svg>
+    <div class="nav-wordmark">TYNNY-MAE<span>HOMESUPPLY</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#watch">Watch</a></li>
+    <li><a href="#vendors">Vendors</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <button class="nav-cta" id="openSurvey">Subscribe Now</button>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-content fade-up">
+    <div class="hero-tag">Household Provisioning, Reimagined</div>
+    <h1 class="hero-headline">
+      Supply your home<br>with <em>quiet certainty.</em>
+    </h1>
+    <p class="hero-sub">
+      Tynny-Mae HomeSupply is Lagos's premier prepaid household provisioning system — delivering verified foodstuffs and essentials to your door, on schedule, every time.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" id="heroSubscribeBtn">Choose Your Plan</button>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-circle-frame">
+      <div class="hero-orbits"><div class="orbit-dot"></div></div>
+      <svg class="hero-logo-large" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="88" r="72" stroke="#C9A84C" stroke-width="1.2" opacity="0.9"/>
+        <circle cx="100" cy="88" r="60" stroke="#C9A84C" stroke-width="0.6" opacity="0.4"/>
+        <path d="M86 65 C78 73 75 83 80 93 C85 102 96 105 96 105" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <path d="M86 65 C93 59 102 61 106 66 C110 72 107 79 101 81 C95 83 87 80 86 72 Z" stroke="#C9A84C" stroke-width="1.8" fill="rgba(201,168,76,0.08)"/>
+        <path d="M96 95 L93 106 C91 113 93 121 100 124 C107 121 109 113 107 106 L104 95" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <ellipse cx="100" cy="124" rx="7" ry="9" stroke="#C9A84C" stroke-width="1.8" fill="rgba(201,168,76,0.08)"/>
+        <text x="100" y="183" font-family="'Cormorant Garamond', serif" font-size="14" font-weight="400" fill="#C9A84C" text-anchor="middle" letter-spacing="6">TYNNY-MAE</text>
+        <text x="100" y="198" font-family="'Cormorant Garamond', serif" font-size="7.5" fill="#C9A84C" text-anchor="middle" letter-spacing="8" opacity="0.8">HOMESUPPLY</text>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-bg-text">TM</div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     STATS BAND
+══════════════════════════════════════ -->
+<div class="stats-band">
+  <div class="stat-item fade-up">
+    <div class="stat-number">500+</div>
+    <div class="stat-label">Households Served</div>
+  </div>
+  <div class="stat-item fade-up">
+    <div class="stat-number">98%</div>
+    <div class="stat-label">On-Time Delivery</div>
+  </div>
+  <div class="stat-item fade-up">
+    <div class="stat-number">40+</div>
+    <div class="stat-label">Verified Vendors</div>
+  </div>
+  <div class="stat-item fade-up">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Curated Plans</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     WHAT WE OFFER
+══════════════════════════════════════ -->
+<section class="offer" id="about">
+  <div class="offer-grid">
+    <div class="offer-text fade-up">
+      <div class="section-tag">What We Offer</div>
+      <h2 class="section-title">Not grocery<br>delivery. <em class="gold">Household<br>infrastructure.</em></h2>
+      <p class="offer-body">
+        We eliminate the time lost in markets, the inconsistency of informal sourcing, and the stress of fragmented provisioning. Tynny-Mae HomeSupply is a structured, prepaid system built around your household's rhythm — not ours.
+      </p>
+    </div>
+    <div class="offer-pillars fade-up">
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Curated Bundles</div>
+          <div class="pillar-desc">Predefined plans — Basic, Family, Plus — with every essential mapped out so you never need to think about what to stock again.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Predictable Delivery</div>
+          <div class="pillar-desc">Weekly or monthly cycles, confirmed in advance. Your schedule is set at subscription — no surprises, no chasing.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Verified Sourcing</div>
+          <div class="pillar-desc">Every item in your bundle is sourced from approved, quality-verified vendors on our platform. No substandard goods, ever.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <div class="pillar-title">Prepaid & Protected</div>
+          <div class="pillar-desc">Pay once per cycle. Your supply is guaranteed. No credit risk, no informal agreements, no last-minute shortfalls.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     IN-APP VIDEO
+     Replace VIDEO_ID with your YouTube video ID
+     e.g. https://youtube.com/watch?v=VIDEO_ID
+══════════════════════════════════════ -->
+<div class="video-section" id="watch">
+  <div class="video-inner">
+    <div class="video-text fade-up">
+      <div class="section-tag">See It In Action</div>
+      <h2 class="section-title">Watch how<br><em class="gold">HomeSupply</em><br>works.</h2>
+      <p>
+        From plan selection to your first delivery — see the full Tynny-Mae experience in under two minutes. Real households. Real bundles. Real delivery.
+      </p>
+      <div class="video-meta">
+        <div class="video-meta-item">Verified sourcing from Lagos vendors</div>
+        <div class="video-meta-item">Quality-checked before dispatch</div>
+        <div class="video-meta-item">Delivered on your confirmed schedule</div>
+        <div class="video-meta-item">Built for busy Lagos households</div>
+      </div>
+    </div>
+
+    <div class="video-frame-wrap fade-up">
+      <div class="video-frame-border">
+        <div class="video-corner tl"></div>
+        <div class="video-corner tr"></div>
+        <div class="video-corner bl"></div>
+        <div class="video-corner br"></div>
+        <div class="video-embed">
+          <!--
+            ─────────────────────────────────────────────
+            REPLACE  YOUR_VIDEO_ID  with your YouTube ID
+            e.g. for https://youtu.be/dQw4w9WgXcQ
+            use:  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            ─────────────────────────────────────────────
+          -->
+          <iframe
+            src="https://www.youtube.com/embed/d0LWkxkpm1I?rel=0&modestbranding=1&playsinline=1"
+            title="Tynny-Mae HomeSupply — How It Works"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+      <div class="video-label">Tynny-Mae HomeSupply — Official Overview</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PLANS
+══════════════════════════════════════ -->
+<section class="plans" id="plans">
+  <div class="plans-header fade-up">
+    <div class="section-tag" style="justify-content: center;">Subscription Plans</div>
+    <h2 class="section-title">Choose your <em class="gold">HomeSupply</em> plan</h2>
+    <p style="margin-top: 0.8rem;">Monthly cycles. Prepaid. Delivered to your door.</p>
+  </div>
+  <div class="plans-grid">
+
+    <!-- BASIC -->
+    <div class="plan-card fade-up">
+      <div class="plan-name">Basic</div>
+      <div class="plan-cycle">Monthly Cycle</div>
+      <div class="plan-price">
+        <span class="plan-currency">₦</span>
+        <span class="plan-amount">35,000</span>
+        <span class="plan-per">/ month</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-items">
+        <li class="plan-item"><span class="plan-check"></span>Rice (5kg)</li>
+        <li class="plan-item"><span class="plan-check"></span>Beans (3kg)</li>
+        <li class="plan-item"><span class="plan-check"></span>Palm Oil (2L)</li>
+        <li class="plan-item"><span class="plan-check"></span>Tomatoes &amp; Peppers</li>
+        <li class="plan-item"><span class="plan-check"></span>Seasoning Essentials</li>
+        <li class="plan-item"><span class="plan-check"></span>Garri (5kg)</li>
+      </ul>
+      <button class="plan-btn open-survey">Select Basic</button>
+    </div>
+
+    <!-- FAMILY (featured) -->
+    <div class="plan-card featured fade-up">
+      <div class="plan-featured-badge">Most Popular</div>
+      <div class="plan-name">Family</div>
+      <div class="plan-cycle">Monthly Cycle</div>
+      <div class="plan-price">
+        <span class="plan-currency">₦</span>
+        <span class="plan-amount">65,000</span>
+        <span class="plan-per">/ month</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-items">
+        <li class="plan-item"><span class="plan-check"></span>Rice (10kg)</li>
+        <li class="plan-item"><span class="plan-check"></span>Beans (5kg) + Lentils</li>
+        <li class="plan-item"><span class="plan-check"></span>Palm Oil (4L) + Veg Oil (2L)</li>
+        <li class="plan-item"><span class="plan-check"></span>Full Tomatoes &amp; Pepper Set</li>
+        <li class="plan-item"><span class="plan-check"></span>Garri (10kg) + Yam Flour</li>
+        <li class="plan-item"><span class="plan-check"></span>Household Cleaning Pack</li>
+        <li class="plan-item"><span class="plan-check"></span>3 Item Swaps per Cycle</li>
+      </ul>
+      <button class="plan-btn open-survey">Select Family</button>
+    </div>
+
+    <!-- PLUS -->
+    <div class="plan-card fade-up">
+      <div class="plan-name">Plus</div>
+      <div class="plan-cycle">Monthly Cycle</div>
+      <div class="plan-price">
+        <span class="plan-currency">₦</span>
+        <span class="plan-amount">110,000</span>
+        <span class="plan-per">/ month</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-items">
+        <li class="plan-item"><span class="plan-check"></span>All Family Plan Items</li>
+        <li class="plan-item"><span class="plan-check"></span>Premium Protein Bundle</li>
+        <li class="plan-item"><span class="plan-check"></span>Fresh Produce Box</li>
+        <li class="plan-item"><span class="plan-check"></span>Personal Care Essentials</li>
+        <li class="plan-item"><span class="plan-check"></span>Pantry Upgrade Pack</li>
+        <li class="plan-item"><span class="plan-check"></span>Priority Delivery Window</li>
+        <li class="plan-item"><span class="plan-check"></span>Dedicated Account Manager</li>
+      </ul>
+      <button class="plan-btn open-survey">Select Plus</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════ -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-header fade-up">
+      <div class="section-tag" style="justify-content: center;">The Process</div>
+      <h2 class="section-title">Five steps to a <em class="gold">provisioned home</em></h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step fade-up">
+        <div class="step-number-wrap">
+          <div class="step-number">01</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Select Your Plan</div>
+          <div class="step-desc">Browse our three curated HomeSupply plans — Basic, Family, or Plus. Each is designed for a specific household size and provisioning need. View full bundle contents before committing.</div>
+        </div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="step-number-wrap">
+          <div class="step-number">02</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Complete Prepayment</div>
+          <div class="step-desc">Pay upfront via card or bank transfer. Your subscription is confirmed only upon payment, protecting both you and our vendors from uncertainty.</div>
+        </div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="step-number-wrap">
+          <div class="step-number">03</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Receive Your Schedule</div>
+          <div class="step-desc">Immediately after confirmation, you receive your delivery calendar for the full cycle. Know exactly when your bundle arrives — no guessing, no waiting for updates.</div>
+        </div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="step-number-wrap">
+          <div class="step-number">04</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">We Fulfil Your Bundle</div>
+          <div class="step-desc">Our verified vendor network sources, packs, and dispatches your bundle. Every item is quality-checked before leaving our fulfilment partners. You track status in real time.</div>
+        </div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="step-number-wrap">
+          <div class="step-number">05</div>
+        </div>
+        <div class="step-content">
+          <div class="step-title">Renew With One Click</div>
+          <div class="step-desc">Seven days before expiry, we remind you. Your plan, address, and preferences are saved. Renewal takes one click. Your household never runs dry.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     VENDOR CTA
+══════════════════════════════════════ -->
+<div class="vendor-cta" id="vendors">
+  <div class="vendor-inner">
+    <div class="vendor-text fade-up">
+      <div class="section-tag">For Suppliers &amp; Vendors</div>
+      <h2 class="section-title">Sell through the <em class="gold">Tynny-Mae</em> marketplace</h2>
+      <p>
+        Are you a verified food supplier, produce merchant, or household essentials brand in Lagos? Join our growing vendor network and gain access to a structured, prepaid order flow — no chasing payments, no informal arrangements.
+      </p>
+      <div class="vendor-benefits">
+        <div class="vendor-benefit">Guaranteed prepaid orders every cycle</div>
+        <div class="vendor-benefit">Structured packing and dispatch schedules</div>
+        <div class="vendor-benefit">Performance-based growth and featured placement</div>
+        <div class="vendor-benefit">Transparent earnings dashboard and remittance</div>
+      </div>
+    </div>
+    <div class="vendor-actions fade-up">
+      <a href="#" class="btn-primary">Register as a Vendor</a>
+      <span class="btn-ghost" style="display:inline-block;">Learn about vendor terms</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="testimonials-header fade-up">
+    <div class="section-tag" style="justify-content: center;">From Our Subscribers</div>
+    <h2 class="section-title">What Lagos households <em class="gold">say</em></h2>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">I used to spend half my Saturdays at Mile 12 market. Now my kitchen is stocked before I even think about it. Tynny-Mae has genuinely changed our household rhythm.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Adaeze O.</div>
+          <div class="author-location">Lekki Phase 1 · Family Plan</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">The quality is consistent in a way I never got from informal suppliers. Everything arrives on the day they say it will. It feels like having a very reliable house manager.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">F</div>
+        <div>
+          <div class="author-name">Funmilayo B.</div>
+          <div class="author-location">Victoria Island · Plus Plan</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">As a working couple, we used to argue about who would remember to restock. That argument no longer exists. Tynny-Mae is worth every naira.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">K</div>
+        <div>
+          <div class="author-name">Kunle &amp; Seun A.</div>
+          <div class="author-location">Ikoyi · Basic Plan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-wordmark">TYNNY-MAE<span>HOMESUPPLY</span></span>
+      <p>The most trusted prepaid household provisioning system for Lagos homes. Structured supply. Verified quality. Predictable delivery.</p>
+    </div>
+    <div>
+      <span class="footer-col-title">Plans</span>
+      <ul class="footer-links">
+        <li><a href="#plans">Basic Plan</a></li>
+        <li><a href="#plans">Family Plan</a></li>
+        <li><a href="#plans">Plus Plan</a></li>
+        <li><a href="#plans">Compare Plans</a></li>
+      </ul>
+    </div>
+    <div>
+      <span class="footer-col-title">Company</span>
+      <ul class="footer-links">
+        <li><a href="#about">About Tynny-Mae</a></li>
+        <li><a href="#vendors">Our Vendors</a></li>
+        <li><a href="#">Quality Standards</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <span class="footer-col-title">Vendors</span>
+      <ul class="footer-links">
+        <li><a href="#vendors">Register as Vendor</a></li>
+        <li><a href="#">Vendor Dashboard</a></li>
+        <li><a href="#">Vendor Guidelines</a></li>
+        <li><a href="#">Remittance Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Tynny-Mae Luxury. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Delivery Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT — all in one clean block
+══════════════════════════════════════ -->
+<script>
+(function () {
+  // ── Nav scroll class ──────────────────────────
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Scroll fade-up observer ───────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── Survey modal ──────────────────────────────
+  const modal      = document.getElementById('surveyModal');
+  const closeBtn   = document.getElementById('closeSurvey');
+  const openBtns   = [
+    document.getElementById('openSurvey'),
+    document.getElementById('heroSubscribeBtn'),
+    ...document.querySelectorAll('.open-survey'),
+  ];
+
+  function openModal() {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => { if (btn) btn.addEventListener('click', openModal); });
+  closeBtn.addEventListener('click', closeModal);
+
+  // Click outside the box to close
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // ── Plan button pre-selects plan in modal ─────
+  document.querySelectorAll('.plan-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const planName  = btn.closest('.plan-card').querySelector('.plan-name').textContent.trim();
+      const planSelect = document.getElementById('preferredPlan');
+      // Match option that starts with the plan name
+      Array.from(planSelect.options).forEach(opt => {
+        if (opt.text.startsWith(planName)) planSelect.value = opt.value;
+      });
+      openModal();
+    });
+  });
+})();
+</script>
+</body>
+</html>
