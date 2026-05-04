@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.localized
+
+# Screenshots
+Screenshot*.png
+
+# Office files
+*.pptx
+*.xlsx
+*.pdf
+*.docx
+
+# System
+node_modules/
+.vscode/
+
+# Misc
+*.log
