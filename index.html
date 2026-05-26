@@ -1989,5 +1989,174 @@ function trapFocus(modal){
  
 })();
 </script>
+
+<!-- ═══════════════════════════════════════
+ LUXURY SUBSCRIPTION MODAL
+═══════════════════════════════════════ -->
+<div id="luxModal" class="lux-modal">
+  <div class="lux-box">
+    <button class="lux-close" id="closeLux">✕</button>
+
+    <h2 class="lux-title">Begin Your Subscription</h2>
+
+    <form id="luxForm">
+      <input class="lux-input" name="fullName" placeholder="Full Name" required>
+      <input class="lux-input" name="whatsapp" placeholder="WhatsApp Number" required>
+
+      <select class="lux-input" name="householdSize" required>
+        <option disabled selected>Household Size</option>
+        <option>1 - 2 People</option>
+        <option>3 - 5 People</option>
+        <option>6 - 8 People</option>
+        <option>9+ People</option>
+      </select>
+
+      <select class="lux-input" name="preferredPlan" required>
+        <option disabled selected>Preferred Plan</option>
+        <option>Basic</option>
+        <option>Family</option>
+        <option>Premium</option>
+      </select>
+
+      <input class="lux-input" name="deliveryArea" placeholder="Delivery Area">
+
+      <select class="lux-input" name="frequency">
+        <option>Monthly</option>
+        <option>Bi-weekly</option>
+      </select>
+
+      <textarea class="lux-input" name="preferences" placeholder="Preferences & Special Requests"></textarea>
+
+      <button class="lux-btn">SUBMIT & BEGIN MY SUBSCRIPTION</button>
+      <p class="lux-note">No payment here. We'll send your payment link within 24 hours.</p>
+    </form>
+  </div>
+</div>
+
+<style>
+.lux-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
+  z-index:9999;
+}
+.lux-modal.open{opacity:1;visibility:visible;}
+.lux-box{
+  background:#0A0A0A;
+  border:1px solid #C9A84C;
+  padding:2rem;
+  width:90%;
+  max-width:420px;
+  position:relative;
+}
+.lux-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;
+  text-align:center;
+  margin-bottom:1.5rem;
+  color:#fff;
+}
+.lux-close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  background:none;
+  border:none;
+  color:#C9A84C;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+.lux-input{
+  width:100%;
+  margin-bottom:.8rem;
+  padding:.8rem;
+  background:#111;
+  border:1px solid rgba(201,168,76,.3);
+  color:#fff;
+}
+.lux-input:focus{border-color:#C9A84C;}
+.lux-btn{
+  width:100%;
+  padding:1rem;
+  background:#C9A84C;
+  border:none;
+  color:#000;
+  font-size:.65rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.lux-btn:hover{background:#E2C97E;}
+.lux-note{
+  font-size:.55rem;
+  text-align:center;
+  margin-top:.6rem;
+  color:rgba(255,255,255,.4);
+}
+</style>
+
+<script>
+const modal = document.getElementById("luxModal");
+const closeBtn = document.getElementById("closeLux");
+
+document.querySelectorAll(
+  ".nav-cta, .mob-sub, .open-survey-plan, #heroSubBtn"
+).forEach(btn => {
+  btn.addEventListener("click", () => modal.classList.add("open"));
+});
+
+closeBtn.onclick = () => modal.classList.remove("open");
+window.addEventListener("keydown", e=>{
+  if(e.key==="Escape") modal.classList.remove("open");
+});
+
+const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfKlTsCmo6JMPVzDw_ayWvUUrmoYixMZ3NQ7BJIQX1E28G-Xw/formResponse";
+
+const ENTRY_IDS = {
+  fullName:"entry.1901529949",
+  whatsapp:"entry.1432082468",
+  householdSize:"entry.1122186639",
+  preferredPlan:"entry.899128366",
+  deliveryArea:"entry.953366216",
+  frequency:"entry.1487977938",
+  preferences:"entry.190256608"
+};
+
+document.getElementById("luxForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+
+  const form = e.target;
+
+  const data = new FormData();
+  data.append(ENTRY_IDS.fullName, form.fullName.value);
+  data.append(ENTRY_IDS.whatsapp, form.whatsapp.value);
+  data.append(ENTRY_IDS.householdSize, form.householdSize.value);
+  data.append(ENTRY_IDS.preferredPlan, form.preferredPlan.value);
+  data.append(ENTRY_IDS.deliveryArea, form.deliveryArea.value);
+  data.append(ENTRY_IDS.frequency, form.frequency.value);
+  data.append(ENTRY_IDS.preferences, form.preferences.value);
+
+  try{
+    await fetch(FORM_URL, {
+      method:"POST",
+      body:data,
+      mode:"no-cors"
+    });
+
+    alert("Success! We'll contact you shortly.");
+    form.reset();
+    modal.classList.remove("open");
+
+  }catch(err){
+    alert("Submission failed. Try again.");
+  }
+});
+</script>
+
 </body>
 </html>
